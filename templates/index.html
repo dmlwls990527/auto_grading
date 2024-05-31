@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>답안지 채점 시스템</title>
+    <!-- CSS 파일 경로를 Flask의 url_for 함수를 이용하여 설정 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>답안지 채점 시스템</h1>
+    </header>
+    <div class="container">
+        <div class="centered-box">
+            <section id="download-section">
+                <a href="https://drive.google.com/uc?export=download&id=1v_7vUat1iOIr53X18HsFHKopKdlGVKWt" download class="btn btn-download">답안지 PDF 다운로드</a>
+            </section>
+            
+            <section class="upload-section left-box">
+                <h2>학생들의 답안지 업로드</h2>
+                <input type="file" id="student_files" multiple class="file-input">
+            </section>
+
+            <section class="upload-section right-box">
+                <h2>정답 입력</h2>
+                <label for="num_of_answers">문제 수: </label>
+                <input type="number" id="num_of_answers" class="num-input">
+                <button id="generate-answer-inputs" class="btn btn-primary">입력 필드 생성</button>
+                <div id="answer-inputs-container">
+                    <!-- 입력 필드는 여기에 동적으로 추가될 것입니다. -->
+                </div>
+            </section>
+        </div>
+
+        <section class="action-section">
+            <button id="grade-btn" class="btn btn-primary">채점 시작</button>
+        </section>
+
+        <section id="result-section" class="result">
+            <h2>채점 결과</h2>
+            <div id="grading-result" class="grading-result">
+                <!-- 결과는 여기에 표시됩니다. -->
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript 파일 경로를 Flask의 url_for 함수를 이용하여 설정 -->
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
