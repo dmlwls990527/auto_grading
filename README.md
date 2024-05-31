@@ -20,7 +20,7 @@ OCR 기술을 이용해서 시험지들을 OCR로 분석해서 자동으로 채�
 💡 상용 기술 비교
 ---
 OCR 을 적용할 API 를 결정하는데 있어서 상용기술로 사용되는 OCR기술들을 비교대조 해볼 필요가 있었다. 
-[!상용기술비교](https://github.com/dmlwls990527/auto_grading/blob/master/images/%EC%83%81%EC%9A%A9%EA%B8%B0%EC%88%A0%20%EB%B9%84%EA%B5%90.PNG)
+![상용기술비교](https://github.com/dmlwls990527/auto_grading/blob/master/images/%EC%83%81%EC%9A%A9%EA%B8%B0%EC%88%A0%20%EB%B9%84%EA%B5%90.PNG)
 Google Vision Api의 경우 위 2개의 Api와 비교했을 때 좀 더 정확한 텍스트 인식률을 확인할 수 있었다. 
 
 시나리오
