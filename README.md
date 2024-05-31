@@ -23,7 +23,7 @@ OCR 을 적용할 API 를 결정하는데 있어서 상용기술로 사용되는
 ![상용기술비교](https://github.com/dmlwls990527/auto_grading/blob/master/images/%EC%83%81%EC%9A%A9%EA%B8%B0%EC%88%A0%20%EB%B9%84%EA%B5%90.PNG)
 Google Vision Api의 경우 위 2개의 Api와 비교했을 때 좀 더 정확한 텍스트 인식률을 확인할 수 있었다. 
 
-프로젝트 설계 및 구성 
+프로젝트 구성 
 ---
 ![아키텍처](https://github.com/dmlwls990527/auto_grading/blob/master/images/%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.PNG)
 
@@ -59,20 +59,51 @@ h. 최종 결과 확인:
 
 사용자 또는 관리자는 채점 결과가 저장된 CSV 파일을 다운로드하여 확인한다.
 
+프로젝트 설계
+---
+a. 답안 영역 분할 단계
 
-전처리 과정 
+답안지는 답안별로 영역들이 나뉘어져 있기에 답안지에 인식된 x축의 긴 선들을 기준으로 답안의 영역을 분할한다. 
+![1단계](https://github.com/dmlwls990527/auto_grading/blob/master/images/%EC%A0%88%EC%B0%A81.PNG)
+
+b. 학번,이름 추출 단계
+
+어떤 학생의 시험지인지 판별하는 과정이다. 답안 영역 분할 단계를 통해 바디 (답안 표 영역 ) / 헤더 (과목정보,학번,이름 영역 ) 으로 나뉜다. 
+
+헤더 부분을 통해서 학번과 이름 작성칸의 () 와 [] 안에 있는 텍스트를 인식할 수 있도록 지정하여 저장하는 방식으로 텍스트 정보를 저장하였다. 
+
+![2단계](https://github.com/dmlwls990527/auto_grading/blob/master/images/%EC%A0%88%EC%B0%A82.PNG)
+
+c. 문항번호 ,답안 , 배점 텍스트 추출
+
+답안 영역 분할 단계를 통해 얻은 문항 별 이미지에서 텍스트를 추출한다. 그 후에
+
+2차원 배열을 통해서 [번호][답안][배점] 으로 매핑하였다. 공백 답아느이 경우에는 " " 를 매핑하였다.
+
+![3단계 예시](https://github.com/dmlwls990527/auto_grading/blob/master/images/%EC%A0%88%EC%B0%A83.PNG)
+
+d. 답안 후처리 단계
+
+텍스트를 인식하면서 주로 발생하는 오류들을 발견하였다. 주로 1과 l 이 잘못 인식되는 경우, 띄어쓰기 및 줄바꿈이 이루어지지 않았으나 인식이 되는 경우가 이에 해당한다. 
+
+![4단계](https://github.com/dmlwls990527/auto_grading/blob/master/images/%EC%A0%88%EC%B0%A84.PNG)
+
+위에있는 표가 후처리 전, 아래 표가 후처리 후의 답안 모습이다. 문제 5와,9 그리고 문제 10을 보면 띄어쓰기와 줄바꿈이 후처리 되었다.
+
+e. 실제 답안을 이용한 학생 답안 채점 단계
+
+답안 후처리 단계까지의 과정을 거친 이후 실질적인 채점이 이루어지는 단계이다. 사용자가 웹을 이용해 미리 입력한 실제 답안과 인식한 답안을 분항별로 비교하여 채점하였다.
+
+f. 결과를 csv 파일로 변환하는 단계
+
+![5단계,채점 완료 이미지](https://github.com/dmlwls990527/auto_grading/blob/master/images/%EC%A0%88%EC%B0%A85.PNG)
+![csv파일](https://github.com/dmlwls990527/auto_grading/blob/master/images/%EC%B1%84%EC%A0%90%EA%B2%B0%EA%B3%BC%20csv%20%ED%8C%8C%EC%9D%BC.PNG)
+
+프로젝트 결과
 --- 
+![웹페이지](https://github.com/dmlwls990527/auto_grading/blob/master/images/%EC%9B%B9%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4.PNG)
 
-스캔한 답안지는 다음과 같은 구성으로 전처리 된다.
-
-영역 분할
-
-텍스트 추출
-
-답안 후처리
-
-채점 및 결과 반환
-
+[시연 영상] (https://drive.google.com/file/d/18DOWlgIxsum1GLQoGY_jolcJsO8-oAkQ/view?resourcekey) 
 채점 소요시간은 시험지 하나에 15문항이라고 했을때 시험지 하나 당 8.3 초가 걸렸다. 학생 100명의 답안지를 채점하기 위해 필요한 예상 시간은 약 13.8분이다.
 
 
